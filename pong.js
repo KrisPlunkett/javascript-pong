@@ -14,11 +14,16 @@ var context = canvas.getContext('2d');
 var player = new Player();
 var computer = new Computer();
 var ball = new Ball(200, 300);
+var playerScore = 0;
+var computerScore = 0;
+
+document.getElementById('player-score').innerHTML = playerScore;
+document.getElementById('computer-score').innerHTML = computerScore;
 
 var keysDown = {};
 
 var render = function() {
-    context.fillStyle = '#FF00FF';
+    context.fillStyle = '#dddddd';
     context.fillRect(0, 0, width, height);
     player.render();
     computer.render();
@@ -121,7 +126,7 @@ function Ball(x, y) {
 Ball.prototype.render = function() {
     context.beginPath();
     context.arc(this.x, this.y, this.radius, 2 * Math.PI, false);
-    context.fillStyle = '#000000';
+    context.fillStyle = '#202020';
     context.fill();
 };
 
@@ -142,11 +147,22 @@ Ball.prototype.update = function(paddle1, paddle2) {
         this.xSpeed = -this.xSpeed;
     }
 
-    if (this.y < 0 || this.y > 600) { // a point was scored
+    if (this.y < 0) { // Player point scored
         this.xSpeed = 0;
         this.ySpeed = 3;
         this.x = 200;
         this.y = 300;
+        playerScore++;
+        document.getElementById('player-score').innerHTML = playerScore;
+    }
+
+    if (this.y > 600) { // Computer point scored
+        this.xSpeed = 0;
+        this.ySpeed = 3;
+        this.x = 200;
+        this.y = 300;
+        computerScore++;
+        document.getElementById('computer-score').innerHTML = computerScore;
     }
 
     if (topY > 300) {
