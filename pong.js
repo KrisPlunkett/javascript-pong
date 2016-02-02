@@ -1,28 +1,43 @@
 'use strict';
+var bossMode = 0;
+var SuperCount = 0;
+
 // Getting started
 var animate = window.requestAnimationFrame || window.webkitRequestAnimationFrame ||
 function(callback) {
     window.setTimeout(callback, 1000 / 60);
 };
 
+
 var canvas = document.createElement('canvas');
 var width = 400;
 var height = 600;
+
 canvas.width = width;
 canvas.height = height;
+
 var context = canvas.getContext('2d');
+
 var player = new Player();
+
 var computer = new Computer();
+
 var ball = new Ball(200, 300);
+
+
+
 var playerScore = 0;
 var computerScore = 0;
 
 document.getElementById('player-score').innerHTML = playerScore;
 document.getElementById('computer-score').innerHTML = computerScore;
 
+
+
 var keysDown = {};
 
 var render = function() {
+
     context.fillStyle = '#dddddd';
     context.fillRect(0, 0, width, height);
     player.render();
@@ -103,9 +118,19 @@ Computer.prototype.update = function(ball) {
     var xPos = ball.x;
     var diff = -((this.paddle.x + (this.paddle.width / 2)) - xPos);
     if (diff < 0 && diff < -4) { // max speed left
-        diff = -5;
+        if (bossMode == 1) {
+            diff = -17;
+        }
+        else {
+            diff = -5;
+        }
     } else if (diff > 0 && diff > 4) { // max speed right
-        diff = 5;
+        if (bossMode == 1) {
+            diff = 17;
+        }
+        else {
+            diff = 5;
+        }
     }
     this.paddle.move(diff, 0);
     if (this.paddle.x < 0) {
@@ -124,6 +149,7 @@ function Ball(x, y) {
 }
 
 Ball.prototype.render = function() {
+
     context.beginPath();
     context.arc(this.x, this.y, this.radius, 2 * Math.PI, false);
     context.fillStyle = '#202020';
@@ -131,6 +157,38 @@ Ball.prototype.render = function() {
 };
 
 Ball.prototype.update = function(paddle1, paddle2) {
+    //sorry
+    if (bossMode == 1) {
+        if (SuperCount > 50) {
+
+            document.getElementById('BodyBuilder').style.background = "#6E6E6E";
+            document.getElementById('opponentID').innerHTML = "ANDY!!";
+            document.getElementById('opponentID').style.fontWeight = "900";
+            document.getElementById('lol').innerHTML = "!!!!!!!!!!!!!!!";
+            if (SuperCount > 100) {
+                SuperCount = 0;
+                //console.log(SuperCount);
+            }
+        }
+        else {
+            document.getElementById('opponentID').innerHTML = "andy";
+            document.getElementById('BodyBuilder').style.background = "#ffffff";
+            document.getElementById('opponentID').style.fontWeight = "400";
+            document.getElementById('lol').innerHTML = "!!!!!!!!!!!!!!!";
+        }
+        SuperCount = SuperCount + 1;
+
+        if (computerScore > 2) {
+            alert("YOU LOSE!!!!                             kris blacked out...");
+            toggleBossMode();
+        }
+        if (playerScore > 2) {
+            alert("Congratulations! Im going to disney land! Oh Boy! Can I come?!? Kris gained 50xp and 150credits")
+            document.getElementById('ads').style.display = "none";
+            toggleBossMode();
+        }
+    }
+
     this.x += this.xSpeed;
     this.y += this.ySpeed;
     var topX = this.x - 5;
@@ -182,8 +240,61 @@ Ball.prototype.update = function(paddle1, paddle2) {
     }
 };
 
+//sorry for ruining your code
+var audio = new Audio('song.mp3');
+function toggleBossMode() {
+
+    if (bossMode == 0) {
+
+        audio.play();
+        audio.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+
+        document.getElementById('opponentID').innerHTML = "Andy!!";
+        document.getElementById('player-score').innerHTML = 0;
+        document.getElementById('computer-score').innerHTML = 0;
+        playerScore = 0;
+        computerScore = 0;
+
+        ball.xSpeed = 0;
+        ball.ySpeed = 3;
+        ball.x = 200;
+        ball.y = 300;
+
+        bossMode = 1;
+
+    } 
+    else if (bossMode == 1) {
+
+        audio.pause();
+        audio.currentTime = 0;
+
+        document.getElementById('opponentID').innerHTML = "Computer";
+        document.getElementById('player-score').innerHTML = 0;
+        document.getElementById('computer-score').innerHTML = 0;
+        playerScore = 0;
+        computerScore = 0;
+        document.getElementById('BodyBuilder').style.background = "#ffffff";
+        document.getElementById('opponentID').style.fontWeight = "400";
+
+        ball.xSpeed = 0;
+        ball.ySpeed = 3;
+        ball.x = 200;
+        ball.y = 300;
+
+        document.getElementById('BossToggle').checked = false;
+
+        bossMode = 0;
+    }
+
+}
+
 window.onload = function() {
+    // Builds canvas for play.
     document.body.appendChild(canvas);
+
     animate(step);
 };
 
