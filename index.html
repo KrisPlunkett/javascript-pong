@@ -1,28 +1,71 @@
 <html>
-    <head>
-        <title>Kris Pong</title>
-    </head>
-    <body>
-        <table>
-            <th>
-                Scoreboard
-            </th>
-            <tr>
-                <td>
-                    Player
-                </td>
-                <td id="player-score">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Computer
-                </td>
-                <td id="computer-score">
-                </td>
-            </tr>
+<head>
+    <title id="lol">Kris Pong Lite</title>
+</head>
+<body id="BodyBuilder">
 
-        </table>
+
+    <table>
+
+        <th>
+            <p>Welcome to Kris-Pong<sup>TM</sup> Lite. If you like this version, please check out the .99$ PRO version, without ads!</p>
+
+        </th>
+        <tr>
+            <td><p>*Beat the Boss to unlock No-Ad Mode!*</p></td>
+        </tr>
+        <tr>
+            <td>
+                <hr> 
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="display: inline-block; float: left;">
+                    <th>
+                        Scoreboard
+                    </th>
+                    <tr>
+                        <td>
+                            <p id="playerID">Player</p>
+                        </td>
+                        <td id="player-score">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p id="opponentID">Computer</p>
+                        </td>
+                        <td id="computer-score">
+                        </td>
+                    </tr>
+
+                </table>
+                <table style="display: inline-block; float: right;">
+                    <th>
+                        BOSS MODE?!?!
+                    </th>
+                    <tr>
+                        <td>
+                            <form id="bossMode">
+                                <input type="checkbox" id="BossToggle" onChange="toggleBossMode();" value="StartBoss"> Challenge the Boss
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+
+        </tr>
+
+    </table>
+
+    <div id="ads">
+    <p>Check out this SWEET 32GB SanDisk Ultra MicroSD card! WOW!!!!! BUY IT! Andy gets 8.5%</p>
+    <a rel="nofollow" href="http://www.amazon.com/gp/product/B010Q57T02/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B010Q57T02&linkCode=as2&tag=barrware-20&linkId=S5W7C2YAGHSK2K7P"><img border="0" src="http://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B010Q57T02&Format=_SL110_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=barrware-20" ></a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=barrware-20&l=as2&o=1&a=B010Q57T02" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+    <br>
+    </div>
     <script src="pong.js"></script>
-    </body>
+
+</body>
 </html>
